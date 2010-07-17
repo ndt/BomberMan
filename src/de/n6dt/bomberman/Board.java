@@ -18,6 +18,7 @@
  */
 package de.n6dt.bomberman;
 
+import java.awt.Point;
 import de.n6dt.bomberman.tiles.BlockTile;
 import de.n6dt.bomberman.tiles.NullTile;
 import de.n6dt.bomberman.tiles.Tile;
@@ -83,5 +84,42 @@ public class Board {
 
 	void setTileContent(int x, int y, String t) {
 		tiles[x][y].setType(t);
+	}
+
+	/**
+	 * @param player TODO
+	 * 
+	 */
+	void checkBombAndPlayer(Player player) {
+		if (tiles[player._position.x][player._position.y].getType() == "explode")
+			player.killed();
+		if (player._bomb.isTicking())
+			player._bomb.checkExplode();
+	}
+
+	/**
+	 * @param player TODO
+	 * @param x
+	 * @param y
+	 */
+	void checkKilled(Player player, int x, int y) {
+		if (tiles[x][y].getType() == "explode")
+			player.killed();
+	}
+
+	public boolean canMoveLeft(Point _position) {
+		return (_position.x - 1 >= 0) && (tiles[_position.x - 1][_position.y].usable());
+	}
+
+	public boolean canMoveRight(Point _position) {
+		return (_position.x + 1 < _tilesX) && (tiles[_position.x + 1][_position.y].usable());
+	}
+
+	public boolean canMoveUp(Point _position) {
+		return (_position.y - 1 >= 0) && (tiles[_position.x][_position.y - 1].usable());
+	}
+
+	public boolean canMoveDown(Point _position) {
+		return (_position.y + 1 < _tilesY) && (tiles[_position.x][_position.y + 1].usable());
 	}
 }

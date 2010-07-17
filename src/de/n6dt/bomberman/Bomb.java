@@ -18,14 +18,17 @@
  */
 package de.n6dt.bomberman;
 
+import processing.core.PApplet;
+
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
 public class Bomb {
-	float   _timer;
-	float   _timeStart;
-	float   _timerEnd;
+	
+	final int DURATION = 3;
+	
+	Timer   _timer;
 	boolean _explode;
 	boolean _operating;
 	int     _positionX;
@@ -38,22 +41,22 @@ public class Bomb {
 		_operating = false;
 	}
 
-	void setBomb(int x, int y, int z, float t) {
+	void setBomb(int x, int y, int radius) {
+		BomberMan p = BomberMan.getP();
 		_positionX = x;
 		_positionY = y;
-		_explodeRadius = z;
-		_timerEnd = t;
+		_explodeRadius = radius;
+		_timer = new Timer(p.frameCount, DURATION);
 		_board.tiles[_positionX][_positionY].setBomb();
 		_operating = true;
-		BomberMan p = BomberMan.getP();
-		_timeStart = (float) p.frameCount / BomberMan.FRAME_RATE;
+		_timer.setTimeStart((float) p.frameCount / BomberMan.FRAME_RATE);
 	}
 
 	void checkExplode() {
 		BomberMan p = BomberMan.getP();
-		_timer = (float) p.frameCount / BomberMan.FRAME_RATE - _timeStart;
+		_timer.setTimer((float) p.frameCount / BomberMan.FRAME_RATE - _timer.getTimeStart());
 
-		if (_timer >= _timerEnd) {
+		if (_timer.getTimer() >= _timer.getDuration()) {
 			explode();
 		}
 	}
@@ -130,11 +133,15 @@ public class Bomb {
 
 		_board.tiles[_positionX][_positionY].delBomb();
 		_operating = false;
-		_timer = 0;
+		_timer.setTimer(0);
 	}
 
-	boolean isWorking() {
+	public boolean isTicking() {
 		return _operating;
+	}
+	
+	public void draw(PApplet p, int x, int y) {
+		_timer.tick();
 	}
 
 }

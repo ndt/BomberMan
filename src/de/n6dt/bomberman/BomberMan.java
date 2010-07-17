@@ -60,6 +60,7 @@ public class BomberMan extends PApplet {
 	public void setup() {
 		size(WINDOW_WIDTH, WINDOW_HEIGHT);
 		smooth();
+		frameRate(FRAME_RATE);
 	}
 
 	public void keyPressed() {
@@ -111,9 +112,14 @@ public class BomberMan extends PApplet {
 	}
 
 	public void draw() {
+		
+		for (Player player : players) {
+			player.draw(this);
+		}	
+		
 		if (!stop) {
-			players.get(0).checkBombAndPlayer();
-			players.get(1).checkBombAndPlayer();
+			players.get(0)._board.checkBombAndPlayer(players.get(0));
+			players.get(1)._board.checkBombAndPlayer(players.get(1));
 
 			background(255);
 			board.display();

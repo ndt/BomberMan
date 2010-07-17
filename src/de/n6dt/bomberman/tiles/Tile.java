@@ -55,16 +55,14 @@ public class Tile {
 				_exploding = false;
 			} else {
 				p.fill(0xFF0000);
-				p.rect(x + 5, y + 5, BomberMan.TILE_SIZE - 10,
-						BomberMan.TILE_SIZE - 10);
+				p.rect(x + 5, y + 5, BomberMan.TILE_SIZE - 10, BomberMan.TILE_SIZE - 10);
 			}
 
 		}
 
 		if (_bombed) {
 			p.fill(0);
-			p.ellipse(x + BomberMan.TILE_SIZE / 2, y + BomberMan.TILE_SIZE / 2,
-					BomberMan.TILE_SIZE * 1 / 2, BomberMan.TILE_SIZE * 1 / 2);
+			p.ellipse(x + BomberMan.TILE_SIZE / 2, y + BomberMan.TILE_SIZE / 2, BomberMan.TILE_SIZE * 1 / 2, BomberMan.TILE_SIZE * 1 / 2);
 		}
 	}
 
