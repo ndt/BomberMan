@@ -29,11 +29,17 @@ public class Player {
 
 	Point _position;
 	String _name;
-	int  _color;
+	int _color;
 	Board _board;
 	Bomb _bomb;
 
-	Player(Board board, Point initialPosition, String name, int color) {
+	/**
+	 * @param board
+	 * @param initialPosition
+	 * @param name
+	 * @param color
+	 */
+	public Player(Board board, Point initialPosition, String name, int color) {
 		_board = board;
 		_position = initialPosition;
 		_name = name;
@@ -50,7 +56,11 @@ public class Player {
 		if (_position.y - 1 >= 0)
 			_board.tiles[_position.x][_position.y - 1].setType("free");
 	}
-	
+
+	/**
+	 * @param x
+	 * @param y
+	 */
 	public void draw(int x, int y) {
 		BomberMan p = BomberMan.getP();
 		p.fill(_color);
@@ -58,6 +68,9 @@ public class Player {
 				BomberMan.TILE_SIZE * 3 / 4, BomberMan.TILE_SIZE * 3 / 4);
 	}
 
+	/**
+	 * 
+	 */
 	void moveLeft() {
 		if (_position.x - 1 >= 0
 				&& _board.tiles[_position.x - 1][_position.y].usable()) {
@@ -70,6 +83,9 @@ public class Player {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void moveRight() {
 		if (_position.x + 1 < _board._tilesX
 				&& _board.tiles[_position.x + 1][_position.y].usable()) {
@@ -82,6 +98,9 @@ public class Player {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void moveUp() {
 		if (_position.y - 1 >= 0
 				&& _board.tiles[_position.x][_position.y - 1].usable()) {
@@ -94,6 +113,9 @@ public class Player {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void moveDown() {
 		if (_position.y + 1 < _board._tilesY
 				&& _board.tiles[_position.x][_position.y + 1].usable()) {
@@ -106,12 +128,18 @@ public class Player {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void setBomb() {
 		if (!_bomb.isWorking()) {
 			_bomb.setBomb(_position.x, _position.y, BomberMan.EXPLODE_R, 3);
 		}
 	}
 
+	/**
+	 * 
+	 */
 	void checkBombAndPlayer() {
 		if (_board.tiles[_position.x][_position.y].getType() == "explode")
 			killed();
@@ -119,11 +147,18 @@ public class Player {
 			_bomb.checkExplode();
 	}
 
+	/**
+	 * @param x
+	 * @param y
+	 */
 	void checkKilled(int x, int y) {
 		if (_board.tiles[x][y].getType() == "explode")
 			killed();
 	}
 
+	/**
+	 * 
+	 */
 	void killed() {
 		PApplet.println(_name + " killed!");
 		BomberMan.stop = true;

@@ -20,6 +20,7 @@ package de.n6dt.bomberman;
 
 import processing.core.PApplet;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -39,15 +40,16 @@ public class BomberMan extends PApplet {
 
 	public static BomberMan p;
 	
+	ArrayList<Player> players;
+	
 	Board board;
-	Player dau1;
-	Player dau2;
 
 	public BomberMan() {
 		super();
 		board = new Board(WINDOW_WIDTH, WINDOW_HEIGHT);
-		dau1 = new Player(board, new Point(0, 0), "Spieler 1", 0x0050FF);
-		dau2 = new Player(board, new Point(8, 8), "Spieler 2", 0x00FF00);
+		players = new ArrayList<Player>();
+		players.add( new Player(board, new Point(0, 0), "Spieler 1", 0x0050FF) );
+		players.add( new Player(board, new Point(8, 8), "Spieler 2", 0x00FF00) );
 		p = this;
 	}
 	
@@ -64,43 +66,43 @@ public class BomberMan extends PApplet {
 		switch (key) {
 
 		case '4':
-			dau1.moveLeft();
+			players.get(0).moveLeft();
 			break;
 
 		case '6':
-			dau1.moveRight();
+			players.get(0).moveRight();
 			break;
 
 		case '8':
-			dau1.moveUp();
+			players.get(0).moveUp();
 			break;
 
 		case '5':
-			dau1.moveDown();
+			players.get(0).moveDown();
 			break;
 
 		case '0':
-			dau1.setBomb();
+			players.get(0).setBomb();
 			break;
 
 		case 'a':
-			dau2.moveLeft();
+			players.get(1).moveLeft();
 			break;
 
 		case 'd':
-			dau2.moveRight();
+			players.get(1).moveRight();
 			break;
 
 		case 'w':
-			dau2.moveUp();
+			players.get(1).moveUp();
 			break;
 
 		case 's':
-			dau2.moveDown();
+			players.get(1).moveDown();
 			break;
 
 		case ' ':
-			dau2.setBomb();
+			players.get(1).setBomb();
 			break;
 
 		default:
@@ -110,8 +112,8 @@ public class BomberMan extends PApplet {
 
 	public void draw() {
 		if (!stop) {
-			dau1.checkBombAndPlayer();
-			dau2.checkBombAndPlayer();
+			players.get(0).checkBombAndPlayer();
+			players.get(1).checkBombAndPlayer();
 
 			background(255);
 			board.display();

@@ -19,13 +19,16 @@
 package de.n6dt.bomberman;
 
 import de.n6dt.bomberman.tiles.BlockTile;
+import de.n6dt.bomberman.tiles.NullTile;
 import de.n6dt.bomberman.tiles.Tile;
+import de.n6dt.bomberman.tiles.WallTile;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
 public class Board {
+	
 	int _width;
 	int _height;
 	int _stdX;
@@ -35,7 +38,7 @@ public class Board {
 
 	Tile[][] tiles;
 
-	Board(int a, int b) {
+	public Board(int a, int b) {
 		_width = a;
 		_height = b;
 
@@ -57,9 +60,9 @@ public class Board {
 				if ((i + 1) % 2 == 0 && (j + 1) % 2 == 0) {
 					tiles[i][j] = new BlockTile();
 				} else if ((i + 1) % 2 == 0 || (j + 1) % 2 == 0) {
-					tiles[i][j] = new Tile("wall");
+					tiles[i][j] = new WallTile();
 				} else {
-					tiles[i][j] = new Tile("free");
+					tiles[i][j] = new NullTile();
 				}
 			}
 		}
