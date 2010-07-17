@@ -16,13 +16,11 @@
  * If not, see http://www.gnu.org/licenses/lgpl.html
  *
  */
-package de.n6dt.bomberman.objects;
+package de.n6dt.bomberman;
 
-import java.awt.Point;
-
-import de.n6dt.bomberman.Board;
-import de.n6dt.bomberman.BomberMan;
-import de.n6dt.bomberman.Position;
+import processing.core.PApplet;
+import de.n6dt.bomberman.items.Bomb;
+import de.n6dt.bomberman.items.Item;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -32,17 +30,18 @@ public class Player {
 
 	final static float DIAMETER = Board.TILE_SIZE * 3 / 4;
 
-	Position _position;
-	String _name;
-	int _color;
+	private Position _position;
+	private String _name;
+	private int _color;
+
 
 	/**
 	 * @param initialPosition
 	 * @param name
 	 * @param color
 	 */
-	public Player(Position initialPosition, String name, int color) {
-		_position = initialPosition;
+	public Player(Position pos, String name, int color) {
+		_position = pos;
 		_name = name;
 		_color = color;
 	}
@@ -50,9 +49,7 @@ public class Player {
 	/**
 	 * 
 	 */
-	public void draw() {
-		BomberMan p = BomberMan.getP();
-
+	public void draw(PApplet p) {
 		p.fill(_color);
 		p.ellipse((float) (_position.x + 0.5) * Board.TILE_SIZE, (float) (_position.y + 0.5) * Board.TILE_SIZE, DIAMETER, DIAMETER);
 	}
@@ -61,7 +58,7 @@ public class Player {
 	 * 
 	 */
 	public void moveLeft() {
-		if (BomberMan.board.canMoveLeft(_position)) {
+		if (Board.canMoveLeft(_position)) {
 			_position.x--;
 		}
 	}
@@ -70,7 +67,7 @@ public class Player {
 	 * 
 	 */
 	public void moveRight() {
-		if (BomberMan.board.canMoveRight(_position)) {
+		if (Board.canMoveRight(_position)) {
 			_position.x++;
 		}
 	}
@@ -79,7 +76,7 @@ public class Player {
 	 * 
 	 */
 	public void moveUp() {
-		if (BomberMan.board.canMoveUp(_position)) {
+		if (Board.canMoveUp(_position)) {
 			_position.y--;
 		}
 	}
@@ -88,7 +85,7 @@ public class Player {
 	 * 
 	 */
 	public void moveDown() {
-		if (BomberMan.board.canMoveDown(_position)) {
+		if (Board.canMoveDown(_position)) {
 			_position.y++;
 		}
 	}
@@ -97,10 +94,10 @@ public class Player {
 	 * 
 	 */
 	public void dropBomb() {
-		BomberMan.board.tiles.put(_position, new Bomb(_position));
+		BomberMan.items.put(_position, new Bomb(_position));
 	}
 
-	public Point getPosition() {
+	public Position getPosition() {
 		return _position;
 	}
 

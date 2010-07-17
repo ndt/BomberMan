@@ -18,23 +18,21 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import processing.core.PApplet;
 import de.n6dt.bomberman.Board;
-import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
-public class WallTile extends Tile implements ITile {
+public class WallTile extends Tile {
 
 	public WallTile(Position pos) {
 		super(pos);
 	}
 
-	public void draw() {
-		BomberMan p = BomberMan.getP();
-		
+	public void draw(PApplet p) {
 		p.fill(129);
 		p.rect(_position.x * Board.TILE_SIZE + 3, _position.y * Board.TILE_SIZE + 3, Board.TILE_SIZE - 6, Board.TILE_SIZE - 6);
 	}
@@ -42,4 +40,5 @@ public class WallTile extends Tile implements ITile {
 	public boolean usable() {
 		return false;
 	}
+
 }

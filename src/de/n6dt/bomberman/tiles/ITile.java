@@ -20,12 +20,14 @@ package de.n6dt.bomberman.tiles;
 
 import java.awt.Point;
 
+import processing.core.PApplet;
+
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
 public interface ITile {
-	public void draw();
+	public void draw(PApplet p);
 	public Point getPosition();
 	public boolean usable();
 }

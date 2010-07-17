@@ -18,10 +18,9 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import processing.core.PApplet;
 import de.n6dt.bomberman.Board;
-import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
-import de.n6dt.bomberman.Timer;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -29,22 +28,15 @@ import de.n6dt.bomberman.Timer;
  */
 public class ExplosionTile extends Tile implements ITile {
 	
-	private final static int DURATION = 1; 
-	
-	private Timer timer;
-
 	public ExplosionTile(Position pos) {
 		super(pos);
-		timer = new Timer(DURATION);
 	}
 
 	/**
 	 * @see de.n6dt.bomberman.tiles.ITile#draw(int, int)
 	 */
 	@Override
-	public void draw() {
-		BomberMan p = BomberMan.getP();
-
+	public void draw(PApplet p) {
 		p.fill(0xFFFF0000);
 		p.rect(_position.x * Board.TILE_SIZE + 5, _position.y * Board.TILE_SIZE + 5, Board.TILE_SIZE - 10, Board.TILE_SIZE - 10);
 	}

@@ -19,8 +19,10 @@
 package de.n6dt.bomberman;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import de.n6dt.bomberman.objects.Player;
+import de.n6dt.bomberman.items.Item;
+import de.n6dt.bomberman.tiles.ITile;
 import processing.core.PApplet;
 
 /**
@@ -32,7 +34,6 @@ public class BomberMan extends PApplet {
 	private static final long serialVersionUID = 1L;
 
 	public final static int FRAME_RATE = 60;
-	public final static int EXPLODE_R = 3;
 
 	public static boolean stop = false;
 
@@ -40,11 +41,17 @@ public class BomberMan extends PApplet {
 
 	ArrayList<Player> players;
 
+	public static HashMap<Position,Item> items;
+	public static HashMap<Position,ITile> tiles;
 	public static Board board;
 
 	public BomberMan() {
 		super();
-		board = new Board();
+		tiles = new HashMap<Position, ITile>();
+		items = new HashMap<Position, Item>();
+		
+		Board.createLevel1();
+		
 		players = new ArrayList<Player>();
 		players.add(new Player(new Position(0, 0), "Spieler 1", 0xFF0050FF));
 		players.add(new Player(new Position(8, 8), "Spieler 2", 0xFF00FF00));
@@ -115,12 +122,17 @@ public class BomberMan extends PApplet {
 			return;
 		}
 
-		board.checkPlayers(players);
+		Board.checkPlayers(players);
 
 		background(255);
-		board.draw();
+		for (ITile tile: tiles.values()) {
+			tile.draw(this);
+		}
+		for (Item object: items.values()) {
+			object.draw(this);
+		}
 		for (Player player : players) {
-			player.draw();
+			player.draw(this);
 		}
 	}
 }

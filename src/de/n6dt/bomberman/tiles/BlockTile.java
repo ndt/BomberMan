@@ -18,8 +18,8 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import processing.core.PApplet;
 import de.n6dt.bomberman.Board;
-import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
 
 /**
@@ -32,9 +32,7 @@ public class BlockTile extends Tile implements ITile {
 		super(pos);
 	}
 
-	public void draw() {
-		BomberMan p = BomberMan.getP();
-
+	public void draw(PApplet p) {
 		p.fill(0);
 		p.rect(_position.x * Board.TILE_SIZE, _position.y * Board.TILE_SIZE, Board.TILE_SIZE, Board.TILE_SIZE);
 	}

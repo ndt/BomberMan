@@ -18,37 +18,20 @@
  */
 package de.n6dt.bomberman.tiles;
 
-import java.awt.Point;
-
-import de.n6dt.bomberman.Board;
-import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
+import de.n6dt.bomberman.items.Item;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
-public class Tile implements ITile {
-	protected Position _position;
-
+public abstract class Tile extends Item implements ITile {
+	
 	public Tile(Position pos) {
-		_position = pos;
-	}
-
-	public void draw() {
-		BomberMan p = BomberMan.getP();
-
-		p.fill(255);
-		p.rect(_position.x * Board.TILE_SIZE, _position.y * Board.TILE_SIZE, Board.TILE_SIZE, Board.TILE_SIZE);
+		super(pos);
 	}
 
 	public boolean usable() {
 		return true;
-	}
-
-	@Override
-	public Point getPosition() {
-		// TODO Auto-generated method stub
-		return _position;
 	}
 }
