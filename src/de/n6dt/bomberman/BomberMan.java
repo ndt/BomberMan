@@ -18,9 +18,8 @@
  */
 package de.n6dt.bomberman;
 
-import processing.core.PApplet;
-import java.awt.Point;
 import java.util.ArrayList;
+import processing.core.PApplet;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -30,35 +29,32 @@ public class BomberMan extends PApplet {
 
 	private static final long serialVersionUID = 1L;
 
-	public final static int WINDOW_WIDTH = 300;
-	public final static int WINDOW_HEIGHT = 300;
-	public final static int TILE_SIZE = 30;
 	public final static int FRAME_RATE = 60;
 	public final static int EXPLODE_R = 3;
 
 	public static boolean stop = false;
 
 	public static BomberMan p;
-	
+
 	ArrayList<Player> players;
-	
+
 	Board board;
 
 	public BomberMan() {
 		super();
-		board = new Board(WINDOW_WIDTH, WINDOW_HEIGHT);
+		board = new Board();
 		players = new ArrayList<Player>();
-		players.add( new Player(board, new Point(0, 0), "Spieler 1", 0x0050FF) );
-		players.add( new Player(board, new Point(8, 8), "Spieler 2", 0x00FF00) );
+		players.add(new Player(board, new Position(0, 0), "Spieler 1", 0xFF0050FF));
+		players.add(new Player(board, new Position(8, 8), "Spieler 2", 0xFF00FF00));
 		p = this;
 	}
-	
+
 	public static BomberMan getP() {
 		return p;
 	}
 
 	public void setup() {
-		size(WINDOW_WIDTH, WINDOW_HEIGHT);
+		size(Board.TILES_WIDTH * Board.TILE_SIZE + 1, Board.TILES_HEIGHT * Board.TILE_SIZE + 1);
 		smooth();
 		frameRate(FRAME_RATE);
 	}
@@ -112,19 +108,20 @@ public class BomberMan extends PApplet {
 	}
 
 	public void draw() {
-		
-		for (Player player : players) {
-			player.draw(this);
-		}	
-		
-		if (!stop) {
-			players.get(0)._board.checkBombAndPlayer(players.get(0));
-			players.get(1)._board.checkBombAndPlayer(players.get(1));
-
-			background(255);
-			board.display();
-		} else {
+		if (stop) {
 			background(0);
+			return;
+		}
+
+		players.get(0)._board.checkBombAndPlayer(players.get(0));
+		players.get(1)._board.checkBombAndPlayer(players.get(1));
+		
+		board.checkPlayers(players);
+
+		background(255);
+		board.draw();
+		for (Player player : players) {
+			player.draw();
 		}
 	}
 }

@@ -18,20 +18,27 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import java.awt.Point;
+
+import de.n6dt.bomberman.Board;
+import de.n6dt.bomberman.BomberMan;
+
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
-public class NullTile extends Tile implements ITile {
+public class FreeTile extends Tile implements ITile {
 
-	public NullTile() {
-		super("Null");
+	public FreeTile(Point pos) {
+		super(pos);
 	}
 
 	@Override
-	public void draw(int x, int y) {
-		// TODO Auto-generated method stub
-		
+	public void draw() {
+		BomberMan p = BomberMan.getP();
+
+		p.fill(255);
+		p.rect(_position.x * Board.TILE_SIZE, _position.y * Board.TILE_SIZE, Board.TILE_SIZE, Board.TILE_SIZE);
 	}
 
 }

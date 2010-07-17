@@ -18,10 +18,18 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import java.awt.Point;
+
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
 public interface ITile {
-	public void draw(int x, int y);
+	public void draw();
+	public Point getPosition();
+	public String getType();
+	public void setType(String string);
+	public void setBomb();
+	public void delBomb();
+	public boolean usable();
 }

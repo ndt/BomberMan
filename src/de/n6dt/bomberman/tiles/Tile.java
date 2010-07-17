@@ -18,31 +18,39 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import java.awt.Point;
+
+import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
-public class Tile {
+public class Tile implements ITile {
 	String _type;
 	boolean _usedByPlayer;
 	boolean _bombed;
 	boolean _exploding;
 	int _frameCounter;
+	protected Point _position;
 
-	public Tile(String t) {
+	public Tile(Point pos) {
+		this(pos, "");
+	}
+	public Tile(Point pos, String t) {
+		_position = pos;
 		_type = t;
 		_bombed = false;
 		_exploding = false;
 		_usedByPlayer = false;
 	}
 
-	public void display(int x, int y) {
+	public void draw() {
 		BomberMan p = BomberMan.getP();
 
 		p.fill(255);
-		p.rect(x, y, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
+		p.rect(_position.x * Board.TILE_SIZE, _position.y * Board.TILE_SIZE, Board.TILE_SIZE, Board.TILE_SIZE);
 
 		if (_type == "explode") {
 			if (!_exploding) {
@@ -53,16 +61,7 @@ public class Tile {
 			if (_frameCounter / BomberMan.FRAME_RATE == 1) {
 				_type = "free";
 				_exploding = false;
-			} else {
-				p.fill(0xFF0000);
-				p.rect(x + 5, y + 5, BomberMan.TILE_SIZE - 10, BomberMan.TILE_SIZE - 10);
 			}
-
-		}
-
-		if (_bombed) {
-			p.fill(0);
-			p.ellipse(x + BomberMan.TILE_SIZE / 2, y + BomberMan.TILE_SIZE / 2, BomberMan.TILE_SIZE * 1 / 2, BomberMan.TILE_SIZE * 1 / 2);
 		}
 	}
 
@@ -95,6 +94,11 @@ public class Tile {
 			return true;
 		else
 			return false;
+	}
+	@Override
+	public Point getPosition() {
+		// TODO Auto-generated method stub
+		return _position;
 	}
 
 }

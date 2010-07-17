@@ -27,11 +27,13 @@ import processing.core.PApplet;
  */
 public class Player {
 
-	Point  _position;
+	final static float DIAMETER = Board.TILE_SIZE * 3 / 4;
+
+	Position _position;
 	String _name;
-	int    _color;
-	Board  _board;
-	Bomb   _bomb;
+	int _color;
+	Board _board;
+	Bomb _bomb;
 
 	/**
 	 * @param board
@@ -39,31 +41,24 @@ public class Player {
 	 * @param name
 	 * @param color
 	 */
-	public Player(Board board, Point initialPosition, String name, int color) {
+	public Player(Board board, Position initialPosition, String name, int color) {
+
 		_board = board;
 		_position = initialPosition;
 		_name = name;
 		_color = color;
 
 		_bomb = new Bomb(_board);
-		_board.tiles[_position.x][_position.y].setType(_name);
-		if (_position.x + 1 < _board._tilesX)
-			_board.tiles[_position.x + 1][_position.y].setType("free");
-		if (_position.x - 1 >= 0)
-			_board.tiles[_position.x - 1][_position.y].setType("free");
-		if (_position.y + 1 < _board._tilesY)
-			_board.tiles[_position.x][_position.y + 1].setType("free");
-		if (_position.y - 1 >= 0)
-			_board.tiles[_position.x][_position.y - 1].setType("free");
 	}
 
 	/**
-	 * @param x
-	 * @param y
+	 * 
 	 */
-	public void draw(PApplet p) {
+	public void draw() {
+		BomberMan p = BomberMan.getP();
+
 		p.fill(_color);
-		p.ellipse(_position.x + BomberMan.TILE_SIZE / 2, _position.y + BomberMan.TILE_SIZE / 2, BomberMan.TILE_SIZE * 3 / 4, BomberMan.TILE_SIZE * 3 / 4);
+		p.ellipse((float) (_position.x + 0.5) * Board.TILE_SIZE, (float) (_position.y + 0.5) * Board.TILE_SIZE, DIAMETER, DIAMETER);
 	}
 
 	/**
@@ -71,12 +66,8 @@ public class Player {
 	 */
 	void moveLeft() {
 		if (_board.canMoveLeft(_position)) {
-			_board.tiles[_position.x][_position.y].setType("free");
-			_board.tiles[_position.x][_position.y].delPlayer();
 			_position.x--;
-			_board.checkKilled(this, _position.x, _position.y);
-			_board.tiles[_position.x][_position.y].setType(_name);
-			_board.tiles[_position.x][_position.y].setPlayer();
+			_board.checkKilled(this, _position);
 		}
 	}
 
@@ -85,12 +76,8 @@ public class Player {
 	 */
 	void moveRight() {
 		if (_board.canMoveRight(_position)) {
-			_board.tiles[_position.x][_position.y].setType("free");
-			_board.tiles[_position.x][_position.y].delPlayer();
 			_position.x++;
-			_board.checkKilled(this, _position.x, _position.y);
-			_board.tiles[_position.x][_position.y].setType(_name);
-			_board.tiles[_position.x][_position.y].setPlayer();
+			_board.checkKilled(this, _position);
 		}
 	}
 
@@ -99,12 +86,8 @@ public class Player {
 	 */
 	void moveUp() {
 		if (_board.canMoveUp(_position)) {
-			_board.tiles[_position.x][_position.y].setType("free");
-			_board.tiles[_position.x][_position.y].delPlayer();
 			_position.y--;
-			_board.checkKilled(this, _position.x, _position.y);
-			_board.tiles[_position.x][_position.y].setType(_name);
-			_board.tiles[_position.x][_position.y].setPlayer();
+			_board.checkKilled(this, _position);
 		}
 	}
 
@@ -113,12 +96,8 @@ public class Player {
 	 */
 	void moveDown() {
 		if (_board.canMoveDown(_position)) {
-			_board.tiles[_position.x][_position.y].setType("free");
-			_board.tiles[_position.x][_position.y].delPlayer();
 			_position.y++;
-			_board.checkKilled(this, _position.x, _position.y);
-			_board.tiles[_position.x][_position.y].setType(_name);
-			_board.tiles[_position.x][_position.y].setPlayer();
+			_board.checkKilled(this, _position);
 		}
 	}
 
@@ -127,7 +106,7 @@ public class Player {
 	 */
 	void setBomb() {
 		if (!_bomb.isTicking()) {
-			_bomb.setBomb(_position.x, _position.y, BomberMan.EXPLODE_R);
+			_bomb.setBomb(_position, BomberMan.EXPLODE_R);
 		}
 	}
 
@@ -137,6 +116,10 @@ public class Player {
 	void killed() {
 		PApplet.println(_name + " killed!");
 		BomberMan.stop = true;
+	}
+
+	public Point getPosition() {
+		return _position;
 	}
 
 }

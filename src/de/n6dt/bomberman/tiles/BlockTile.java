@@ -18,6 +18,9 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import java.awt.Point;
+
+import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
 
 /**
@@ -26,15 +29,15 @@ import de.n6dt.bomberman.BomberMan;
  */
 public class BlockTile extends Tile implements ITile {
 
-	public BlockTile() {
-		super("blocked");
+	public BlockTile(Point pos) {
+		super(pos);
 	}
 
-	public void display(int x, int y) {
+	public void draw() {
 		BomberMan p = BomberMan.getP();
 
 		p.fill(0);
-		p.rect(x, y, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
+		p.rect(_position.x * Board.TILE_SIZE, _position.y * Board.TILE_SIZE, Board.TILE_SIZE, Board.TILE_SIZE);
 	}
 
 	public String getType() {
@@ -43,12 +46,6 @@ public class BlockTile extends Tile implements ITile {
 
 	public boolean usable() {
 		return false;
-	}
-
-	@Override
-	public void draw(int x, int y) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

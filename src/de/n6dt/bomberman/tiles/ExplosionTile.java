@@ -18,24 +18,36 @@
  */
 package de.n6dt.bomberman.tiles;
 
+import java.awt.Point;
+
+import de.n6dt.bomberman.Board;
+import de.n6dt.bomberman.BomberMan;
+import de.n6dt.bomberman.Timer;
+
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
 public class ExplosionTile extends Tile implements ITile {
+	
+	private final static int DURATION = 1; 
+	
+	private Timer timer;
 
-	public ExplosionTile() {
-		super("Explosion");
-		// TODO Auto-generated constructor stub
+	public ExplosionTile(Point pos) {
+		super(pos);
+		timer = new Timer(DURATION);
 	}
 
 	/**
 	 * @see de.n6dt.bomberman.tiles.ITile#draw(int, int)
 	 */
 	@Override
-	public void draw(int x, int y) {
-		// TODO Auto-generated method stub
+	public void draw() {
+		BomberMan p = BomberMan.getP();
 
+		p.fill(0x00FF0000);
+		p.rect(_position.x * Board.TILE_SIZE + 5, _position.y * Board.TILE_SIZE + 5, Board.TILE_SIZE - 10, Board.TILE_SIZE - 10);
 	}
 
 }

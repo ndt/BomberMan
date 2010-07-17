@@ -18,10 +18,13 @@
  */
 package de.n6dt.bomberman;
 
-import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import de.n6dt.bomberman.tiles.BlockTile;
-import de.n6dt.bomberman.tiles.NullTile;
-import de.n6dt.bomberman.tiles.Tile;
+import de.n6dt.bomberman.tiles.ExplosionTile;
+import de.n6dt.bomberman.tiles.FreeTile;
+import de.n6dt.bomberman.tiles.ITile;
 import de.n6dt.bomberman.tiles.WallTile;
 
 /**
@@ -30,60 +33,47 @@ import de.n6dt.bomberman.tiles.WallTile;
  */
 public class Board {
 	
-	int _width;
-	int _height;
-	int _stdX;
-	int _stdY;
-	int _tilesX;
-	int _tilesY;
+	public final static int WINDOW_HEIGHT = 300;
+	public final static int WINDOW_WIDTH = 300;
+	public final static int TILE_SIZE = 30;
+	public final static int TILES_HEIGHT = 11;
+	public final static int TILES_WIDTH = 21;
 
-	Tile[][] tiles;
+	HashMap<Position,ITile> tiles;
 
-	public Board(int a, int b) {
-		_width = a;
-		_height = b;
+	public Board() {
+		Position pos;
 
-		_tilesX = a / BomberMan.TILE_SIZE;
-		if (_tilesX % 2 == 0) {
-			_tilesX--;
-			_stdX = (BomberMan.WINDOW_WIDTH - _tilesX * BomberMan.TILE_SIZE) / 2;
-		}
+		tiles = new HashMap<Position, ITile>();
+		
+		for (int i = 0; i < TILES_WIDTH; i++) {
+			for (int j = 0; j < TILES_HEIGHT; j++) {
+				pos = new Position(i,j);
 
-		_tilesY = b / BomberMan.TILE_SIZE;
-		if (_tilesY % 2 == 0) {
-			_tilesY--;
-			_stdY = (BomberMan.WINDOW_HEIGHT - _tilesY * BomberMan.TILE_SIZE) / 2;
-		}
-
-		tiles = new Tile[_tilesX][_tilesY];
-		for (int i = 0; i < _tilesX; i++) {
-			for (int j = 0; j < _tilesY; j++) {
-				if ((i + 1) % 2 == 0 && (j + 1) % 2 == 0) {
-					tiles[i][j] = new BlockTile();
-				} else if ((i + 1) % 2 == 0 || (j + 1) % 2 == 0) {
-					tiles[i][j] = new WallTile();
+				if ((i + 1) % 4 == 0 && (j + 1) % 4 == 0) {
+					tiles.put(pos, new BlockTile(pos));
+				} else if ((i + 1) % 4 == 0 || (j + 1) % 4 == 0) {
+					tiles.put(pos, new WallTile(pos));
 				} else {
-					tiles[i][j] = new NullTile();
+					tiles.put(pos, new FreeTile(pos));
 				}
 			}
 		}
+		
 	}
 
-	void display() {
-		for (int i = 0; i < _tilesX; i++) {
-			for (int j = 0; j < _tilesY; j++) {
-				tiles[i][j].display(_stdX + i * BomberMan.TILE_SIZE, _stdY + j
-						* BomberMan.TILE_SIZE);
-			}
+	void draw() {
+		for (ITile tile: tiles.values()) {
+			tile.draw();
 		}
 	}
 
 	String getTileContent(int x, int y) {
-		return tiles[x][y].getType();
+		return tiles.get(new Position(x,y)).getType();
 	}
 
-	void setTileContent(int x, int y, String t) {
-		tiles[x][y].setType(t);
+	void setTileContent(Position pos, String type) {
+		tiles.get(pos).setType(type);
 	}
 
 	/**
@@ -91,7 +81,7 @@ public class Board {
 	 * 
 	 */
 	void checkBombAndPlayer(Player player) {
-		if (tiles[player._position.x][player._position.y].getType() == "explode")
+		if (tiles.get(player.getPosition()).getType() == "explode")
 			player.killed();
 		if (player._bomb.isTicking())
 			player._bomb.checkExplode();
@@ -102,24 +92,34 @@ public class Board {
 	 * @param x
 	 * @param y
 	 */
-	void checkKilled(Player player, int x, int y) {
-		if (tiles[x][y].getType() == "explode")
+	void checkKilled(Player player, Position pos) {
+		if (tiles.get(pos).getType() == "explode")
 			player.killed();
 	}
 
-	public boolean canMoveLeft(Point _position) {
-		return (_position.x - 1 >= 0) && (tiles[_position.x - 1][_position.y].usable());
+	public boolean canMoveLeft(Position _position) {
+		return (_position.x - 1 >= 0) && (tiles.get(_position.left(1)).usable());
 	}
 
-	public boolean canMoveRight(Point _position) {
-		return (_position.x + 1 < _tilesX) && (tiles[_position.x + 1][_position.y].usable());
+	public boolean canMoveRight(Position _position) {
+		return (_position.x + 1 < TILES_WIDTH) && (tiles.get(_position.right(1)).usable());
 	}
 
-	public boolean canMoveUp(Point _position) {
-		return (_position.y - 1 >= 0) && (tiles[_position.x][_position.y - 1].usable());
+	public boolean canMoveUp(Position _position) {
+		return (_position.y - 1 >= 0) && (tiles.get(_position.up(1)).usable());
 	}
 
-	public boolean canMoveDown(Point _position) {
-		return (_position.y + 1 < _tilesY) && (tiles[_position.x][_position.y + 1].usable());
+	public boolean canMoveDown(Position _position) {
+		return (_position.y + 1 < TILES_HEIGHT) && (tiles.get(_position.down(1)).usable());
+	}
+
+	public void checkPlayers(ArrayList<Player> players) {
+		for (Player player : players) {
+		for (ITile tile : tiles.values()) {
+			if ((tile instanceof ExplosionTile) && tile.getPosition() == player.getPosition()) {
+				BomberMan.stop = true;
+			}
+		}
+	}
 	}
 }
