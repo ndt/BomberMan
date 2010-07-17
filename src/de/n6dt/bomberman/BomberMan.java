@@ -22,7 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.n6dt.bomberman.items.Item;
+import de.n6dt.bomberman.tiles.BlockTile;
+import de.n6dt.bomberman.tiles.ExplosionTile;
+import de.n6dt.bomberman.tiles.FreeTile;
 import de.n6dt.bomberman.tiles.ITile;
+import de.n6dt.bomberman.tiles.WallTile;
 import processing.core.PApplet;
 
 /**
@@ -37,33 +41,43 @@ public class BomberMan extends PApplet {
 
 	public static boolean stop = false;
 
-	public static BomberMan p;
-
 	ArrayList<Player> players;
+
+	public final static int TILE_SIZE = 30;
+	public final static int TILES_HEIGHT = 11;
+	public final static int TILES_WIDTH = 21;
+
+	public static final String[] level1 = {
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNBBBBBBBBBBBBBBBNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN",
+		"NNNNNNNNNNNNNNNNNNNNN"
+	};
 
 	public static HashMap<Position,Item> items;
 	public static HashMap<Position,ITile> tiles;
-	public static Board board;
 
 	public BomberMan() {
 		super();
 		tiles = new HashMap<Position, ITile>();
 		items = new HashMap<Position, Item>();
 		
-		Board.createLevel1();
+		BomberMan.createLevel1();
 		
 		players = new ArrayList<Player>();
 		players.add(new Player(new Position(0, 0), "Spieler 1", 0xFF0050FF));
 		players.add(new Player(new Position(8, 8), "Spieler 2", 0xFF00FF00));
-		p = this;
-	}
-
-	public static BomberMan getP() {
-		return p;
 	}
 
 	public void setup() {
-		size(Board.TILES_WIDTH * Board.TILE_SIZE + 1, Board.TILES_HEIGHT * Board.TILE_SIZE + 1);
+		size(BomberMan.TILES_WIDTH * BomberMan.TILE_SIZE + 1, BomberMan.TILES_HEIGHT * BomberMan.TILE_SIZE + 1);
 		smooth();
 		frameRate(FRAME_RATE);
 	}
@@ -122,7 +136,7 @@ public class BomberMan extends PApplet {
 			return;
 		}
 
-		Board.checkPlayers(players);
+		BomberMan.checkPlayers(players);
 
 		background(255);
 		for (ITile tile: tiles.values()) {
@@ -134,5 +148,56 @@ public class BomberMan extends PApplet {
 		for (Player player : players) {
 			player.draw(this);
 		}
+	}
+
+	public static void createLevel1() {
+		for (int i = 0; i < BomberMan.TILES_WIDTH; i++) {
+			for (int j = 0; j < BomberMan.TILES_HEIGHT; j++) {
+				Position pos = new Position(i, j);
+	
+				if ((i + 1) % 4 == 0 && (j + 1) % 4 == 0) {
+					tiles.put(pos, new BlockTile(pos));
+				} else if ((i + 1) % 4 == 0 || (j + 1) % 4 == 0) {
+					items.put(pos, new WallTile(pos));
+				} else {
+					tiles.put(pos, new FreeTile(pos));
+				}
+			}
+		}
+	}
+
+	public static void checkPlayers(ArrayList<Player> players) {
+		for (Player player : players) {
+			for (ITile tile : tiles.values()) {
+				if ((tile instanceof ExplosionTile)
+						&& tile.getPosition() == player.getPosition()) {
+					stop = true;
+				}
+			}
+		}
+	}
+
+	public static boolean canMoveDown(Position _position) {
+		return (_position.y + 1 < BomberMan.TILES_HEIGHT)
+				&& (tiles.get(_position.down(1)).usable());
+	}
+
+	public static boolean canMoveUp(Position _position) {
+		return (_position.y - 1 >= 0)
+				&& (tiles.get(_position.up(1)).usable());
+	}
+
+	public static boolean canMoveRight(Position _position) {
+		return (_position.x + 1 < BomberMan.TILES_WIDTH)
+				&& (tiles.get(_position.right(1)).usable());
+	}
+
+	public static boolean canMoveLeft(Position _position) {
+		return (_position.x - 1 >= 0)
+				&& (tiles.get(_position.left(1)).usable());
+	}
+	
+	public static void addItem(Position pos, Item item) {
+		items.put(pos, item);
 	}
 }

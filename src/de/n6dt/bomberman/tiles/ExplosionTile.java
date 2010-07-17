@@ -19,7 +19,7 @@
 package de.n6dt.bomberman.tiles;
 
 import processing.core.PApplet;
-import de.n6dt.bomberman.Board;
+import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
 
 /**
@@ -38,7 +38,7 @@ public class ExplosionTile extends Tile implements ITile {
 	@Override
 	public void draw(PApplet p) {
 		p.fill(0xFFFF0000);
-		p.rect(_position.x * Board.TILE_SIZE + 5, _position.y * Board.TILE_SIZE + 5, Board.TILE_SIZE - 10, Board.TILE_SIZE - 10);
+		p.rect(_position.x * BomberMan.TILE_SIZE + 5, _position.y * BomberMan.TILE_SIZE + 5, BomberMan.TILE_SIZE - 10, BomberMan.TILE_SIZE - 10);
 	}
 
 }

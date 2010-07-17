@@ -20,7 +20,6 @@ package de.n6dt.bomberman;
 
 import processing.core.PApplet;
 import de.n6dt.bomberman.items.Bomb;
-import de.n6dt.bomberman.items.Item;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -28,7 +27,7 @@ import de.n6dt.bomberman.items.Item;
  */
 public class Player {
 
-	final static float DIAMETER = Board.TILE_SIZE * 3 / 4;
+	final static float DIAMETER = BomberMan.TILE_SIZE * 3 / 4;
 
 	private Position _position;
 	private String _name;
@@ -51,14 +50,14 @@ public class Player {
 	 */
 	public void draw(PApplet p) {
 		p.fill(_color);
-		p.ellipse((float) (_position.x + 0.5) * Board.TILE_SIZE, (float) (_position.y + 0.5) * Board.TILE_SIZE, DIAMETER, DIAMETER);
+		p.ellipse((float) (_position.x + 0.5) * BomberMan.TILE_SIZE, (float) (_position.y + 0.5) * BomberMan.TILE_SIZE, DIAMETER, DIAMETER);
 	}
 
 	/**
 	 * 
 	 */
 	public void moveLeft() {
-		if (Board.canMoveLeft(_position)) {
+		if (BomberMan.canMoveLeft(_position)) {
 			_position.x--;
 		}
 	}
@@ -67,7 +66,7 @@ public class Player {
 	 * 
 	 */
 	public void moveRight() {
-		if (Board.canMoveRight(_position)) {
+		if (BomberMan.canMoveRight(_position)) {
 			_position.x++;
 		}
 	}
@@ -76,7 +75,7 @@ public class Player {
 	 * 
 	 */
 	public void moveUp() {
-		if (Board.canMoveUp(_position)) {
+		if (BomberMan.canMoveUp(_position)) {
 			_position.y--;
 		}
 	}
@@ -85,7 +84,7 @@ public class Player {
 	 * 
 	 */
 	public void moveDown() {
-		if (Board.canMoveDown(_position)) {
+		if (BomberMan.canMoveDown(_position)) {
 			_position.y++;
 		}
 	}

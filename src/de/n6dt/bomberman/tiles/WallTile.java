@@ -19,7 +19,7 @@
 package de.n6dt.bomberman.tiles;
 
 import processing.core.PApplet;
-import de.n6dt.bomberman.Board;
+import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
 
 /**
@@ -34,7 +34,7 @@ public class WallTile extends Tile {
 
 	public void draw(PApplet p) {
 		p.fill(129);
-		p.rect(_position.x * Board.TILE_SIZE + 3, _position.y * Board.TILE_SIZE + 3, Board.TILE_SIZE - 6, Board.TILE_SIZE - 6);
+		p.rect(_position.x * BomberMan.TILE_SIZE + 3, _position.y * BomberMan.TILE_SIZE + 3, BomberMan.TILE_SIZE - 6, BomberMan.TILE_SIZE - 6);
 	}
 
 	public boolean usable() {

@@ -19,10 +19,8 @@
 package de.n6dt.bomberman.items;
 
 import processing.core.PApplet;
-import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
-import de.n6dt.bomberman.Timer;
 import de.n6dt.bomberman.tiles.ExplosionTile;
 import de.n6dt.bomberman.tiles.WallTile;
 
@@ -34,72 +32,48 @@ public class Bomb extends Item {
 
 	final int DURATION = 3;
 
-	Timer _timer;
 	int _explodeRadius;
 
 	public Bomb(Position position) {
 		super(position);
-		_timer = new Timer(DURATION);
-	}
-
-	void explodeRight() {
-		if (!Board.canMoveRight(_position)) return;
-
-		for (int i = 1; i <= _explodeRadius; i++) {
-			if (_position.right(i).x < Board.TILES_WIDTH) {     
-				if (BomberMan.tiles.get(_position.right(i)) instanceof WallTile) break;
-				BomberMan.tiles.put(_position.right(i),new ExplosionTile(_position.right(i)));
-			}
-		}
-	}
-
-	void explodeLeft() {
-		if (!Board.canMoveLeft(_position)) return;
-
-		for (int i = 1; i <= _explodeRadius; i++) {
-			if (_position.left(i).x >= 0) {
-				if (BomberMan.tiles.get(_position.left(i)) instanceof WallTile) break;
-				BomberMan.tiles.put(_position.left(i),new ExplosionTile(_position.left(i)));
-			}
-		}
-	}
-
-	void explodeDown() {
-		if (!Board.canMoveDown(_position)) return;
-
-		for (int i = _position.y; i <= _explodeRadius; i++) {
-			if (_position.down(i).y < Board.TILES_HEIGHT) {
-				if (BomberMan.tiles.get(_position.down(i)) instanceof WallTile) break;
-				BomberMan.tiles.put(_position.down(i),new ExplosionTile(_position.down(i)));
-			}
-		}
-	}
-
-	void explodeUp() {
-		if (!Board.canMoveUp(_position)) return;
-
-		for (int i = 1; i <= _explodeRadius; i++) {
-			if (_position.up(i).y >= 0) {
-				if (BomberMan.tiles.get(_position.up(i)) instanceof WallTile) break;
-				BomberMan.tiles.put(_position.up(i),new ExplosionTile(_position.up(i)));
-			}
-		}
 	}
 
 	void explode() {
-		explodeRight();
-		explodeLeft();
-		explodeDown();
-		explodeUp();
+		BomberMan.items.put(_position, new ExplosionTile(_position));
+		
+		for (int i = 1; i <= _explodeRadius; i++) {
+			Position p = _position.right(i);
+			if (p.x < BomberMan.TILES_WIDTH) {
+				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				BomberMan.items.put(p,new ExplosionTile(p));
+			}
+		}
+		for (int i = 1; i <= _explodeRadius; i++) {
+			Position p = _position.left(i);
+			if (p.x >= 0) {
+				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				BomberMan.items.put(p,new ExplosionTile(p));
+			}
+		}
+		for (int i = 1; i <= _explodeRadius; i++) {
+			Position p = _position.down(i);
+			if (p.y < BomberMan.TILES_HEIGHT) {
+				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				BomberMan.items.put(p,new ExplosionTile(p));
+			}
+		}
+		for (int i = 1; i <= _explodeRadius; i++) {
+			Position p = _position.up(i);
+			if (p.y >= 0) {
+				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				BomberMan.items.put(p,new ExplosionTile(p));
+			}
+		}
 	}
 
 	public void draw(PApplet p) {
 		p.fill(0);
-		p.ellipse((float) (_position.x + 0.5) * Board.TILE_SIZE, (float) (_position.y + 0.5) * Board.TILE_SIZE, (float) Board.TILE_SIZE / 2, (float) Board.TILE_SIZE / 2);
-
-		if (_timer.finished()) {
-			explode();
-		}
+		p.ellipse((float) (_position.x + 0.5) * BomberMan.TILE_SIZE, (float) (_position.y + 0.5) * BomberMan.TILE_SIZE, (float) BomberMan.TILE_SIZE / 2, (float) BomberMan.TILE_SIZE / 2);
 	}
 
 }
