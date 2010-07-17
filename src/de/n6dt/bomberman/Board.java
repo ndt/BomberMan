@@ -21,6 +21,7 @@ package de.n6dt.bomberman;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.n6dt.bomberman.objects.Player;
 import de.n6dt.bomberman.tiles.BlockTile;
 import de.n6dt.bomberman.tiles.ExplosionTile;
 import de.n6dt.bomberman.tiles.FreeTile;
@@ -39,7 +40,7 @@ public class Board {
 	public final static int TILES_HEIGHT = 11;
 	public final static int TILES_WIDTH = 21;
 
-	HashMap<Position,ITile> tiles;
+	public HashMap<Position,ITile> tiles;
 
 	public Board() {
 		Position pos;
@@ -66,35 +67,6 @@ public class Board {
 		for (ITile tile: tiles.values()) {
 			tile.draw();
 		}
-	}
-
-	String getTileContent(int x, int y) {
-		return tiles.get(new Position(x,y)).getType();
-	}
-
-	void setTileContent(Position pos, String type) {
-		tiles.get(pos).setType(type);
-	}
-
-	/**
-	 * @param player TODO
-	 * 
-	 */
-	void checkBombAndPlayer(Player player) {
-		if (tiles.get(player.getPosition()).getType() == "explode")
-			player.killed();
-		if (player._bomb.isTicking())
-			player._bomb.checkExplode();
-	}
-
-	/**
-	 * @param player TODO
-	 * @param x
-	 * @param y
-	 */
-	void checkKilled(Player player, Position pos) {
-		if (tiles.get(pos).getType() == "explode")
-			player.killed();
 	}
 
 	public boolean canMoveLeft(Position _position) {

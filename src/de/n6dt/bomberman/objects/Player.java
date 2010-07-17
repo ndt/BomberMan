@@ -16,10 +16,13 @@
  * If not, see http://www.gnu.org/licenses/lgpl.html
  *
  */
-package de.n6dt.bomberman;
+package de.n6dt.bomberman.objects;
 
 import java.awt.Point;
-import processing.core.PApplet;
+
+import de.n6dt.bomberman.Board;
+import de.n6dt.bomberman.BomberMan;
+import de.n6dt.bomberman.Position;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -32,23 +35,16 @@ public class Player {
 	Position _position;
 	String _name;
 	int _color;
-	Board _board;
-	Bomb _bomb;
 
 	/**
-	 * @param board
 	 * @param initialPosition
 	 * @param name
 	 * @param color
 	 */
-	public Player(Board board, Position initialPosition, String name, int color) {
-
-		_board = board;
+	public Player(Position initialPosition, String name, int color) {
 		_position = initialPosition;
 		_name = name;
 		_color = color;
-
-		_bomb = new Bomb(_board);
 	}
 
 	/**
@@ -64,58 +60,44 @@ public class Player {
 	/**
 	 * 
 	 */
-	void moveLeft() {
-		if (_board.canMoveLeft(_position)) {
+	public void moveLeft() {
+		if (BomberMan.board.canMoveLeft(_position)) {
 			_position.x--;
-			_board.checkKilled(this, _position);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	void moveRight() {
-		if (_board.canMoveRight(_position)) {
+	public void moveRight() {
+		if (BomberMan.board.canMoveRight(_position)) {
 			_position.x++;
-			_board.checkKilled(this, _position);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	void moveUp() {
-		if (_board.canMoveUp(_position)) {
+	public void moveUp() {
+		if (BomberMan.board.canMoveUp(_position)) {
 			_position.y--;
-			_board.checkKilled(this, _position);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	void moveDown() {
-		if (_board.canMoveDown(_position)) {
+	public void moveDown() {
+		if (BomberMan.board.canMoveDown(_position)) {
 			_position.y++;
-			_board.checkKilled(this, _position);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	void setBomb() {
-		if (!_bomb.isTicking()) {
-			_bomb.setBomb(_position, BomberMan.EXPLODE_R);
-		}
-	}
-
-	/**
-	 * 
-	 */
-	void killed() {
-		PApplet.println(_name + " killed!");
-		BomberMan.stop = true;
+	public void dropBomb() {
+		BomberMan.board.tiles.put(_position, new Bomb(_position));
 	}
 
 	public Point getPosition() {

@@ -18,10 +18,9 @@
  */
 package de.n6dt.bomberman.tiles;
 
-import java.awt.Point;
-
 import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
+import de.n6dt.bomberman.Position;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -29,7 +28,7 @@ import de.n6dt.bomberman.BomberMan;
  */
 public class BlockTile extends Tile implements ITile {
 
-	public BlockTile(Point pos) {
+	public BlockTile(Position pos) {
 		super(pos);
 	}
 

@@ -18,10 +18,9 @@
  */
 package de.n6dt.bomberman.tiles;
 
-import java.awt.Point;
-
 import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
+import de.n6dt.bomberman.Position;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -29,7 +28,7 @@ import de.n6dt.bomberman.BomberMan;
  */
 public class FreeTile extends Tile implements ITile {
 
-	public FreeTile(Point pos) {
+	public FreeTile(Position pos) {
 		super(pos);
 	}
 

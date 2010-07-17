@@ -22,28 +22,17 @@ import java.awt.Point;
 
 import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
+import de.n6dt.bomberman.Position;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
 public class Tile implements ITile {
-	String _type;
-	boolean _usedByPlayer;
-	boolean _bombed;
-	boolean _exploding;
-	int _frameCounter;
-	protected Point _position;
+	protected Position _position;
 
-	public Tile(Point pos) {
-		this(pos, "");
-	}
-	public Tile(Point pos, String t) {
+	public Tile(Position pos) {
 		_position = pos;
-		_type = t;
-		_bombed = false;
-		_exploding = false;
-		_usedByPlayer = false;
 	}
 
 	public void draw() {
@@ -51,54 +40,15 @@ public class Tile implements ITile {
 
 		p.fill(255);
 		p.rect(_position.x * Board.TILE_SIZE, _position.y * Board.TILE_SIZE, Board.TILE_SIZE, Board.TILE_SIZE);
-
-		if (_type == "explode") {
-			if (!_exploding) {
-				_exploding = true;
-				_frameCounter = 0;
-			}
-			_frameCounter++;
-			if (_frameCounter / BomberMan.FRAME_RATE == 1) {
-				_type = "free";
-				_exploding = false;
-			}
-		}
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String t) {
-		_type = t;
-	}
-
-	public void setBomb() {
-		_bombed = true;
-	}
-
-	public void delBomb() {
-		_bombed = false;
-	}
-
-	public void setPlayer() {
-		_usedByPlayer = true;
-	}
-
-	public void delPlayer() {
-		_usedByPlayer = false;
 	}
 
 	public boolean usable() {
-		if (_type != "wall" && !_usedByPlayer)
-			return true;
-		else
-			return false;
+		return true;
 	}
+
 	@Override
 	public Point getPosition() {
 		// TODO Auto-generated method stub
 		return _position;
 	}
-
 }

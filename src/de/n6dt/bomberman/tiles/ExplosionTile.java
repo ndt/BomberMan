@@ -18,10 +18,9 @@
  */
 package de.n6dt.bomberman.tiles;
 
-import java.awt.Point;
-
 import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
+import de.n6dt.bomberman.Position;
 import de.n6dt.bomberman.Timer;
 
 /**
@@ -34,7 +33,7 @@ public class ExplosionTile extends Tile implements ITile {
 	
 	private Timer timer;
 
-	public ExplosionTile(Point pos) {
+	public ExplosionTile(Position pos) {
 		super(pos);
 		timer = new Timer(DURATION);
 	}
@@ -46,7 +45,7 @@ public class ExplosionTile extends Tile implements ITile {
 	public void draw() {
 		BomberMan p = BomberMan.getP();
 
-		p.fill(0x00FF0000);
+		p.fill(0xFFFF0000);
 		p.rect(_position.x * Board.TILE_SIZE + 5, _position.y * Board.TILE_SIZE + 5, Board.TILE_SIZE - 10, Board.TILE_SIZE - 10);
 	}
 

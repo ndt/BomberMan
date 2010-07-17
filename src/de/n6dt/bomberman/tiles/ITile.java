@@ -27,9 +27,5 @@ import java.awt.Point;
 public interface ITile {
 	public void draw();
 	public Point getPosition();
-	public String getType();
-	public void setType(String string);
-	public void setBomb();
-	public void delBomb();
 	public boolean usable();
 }

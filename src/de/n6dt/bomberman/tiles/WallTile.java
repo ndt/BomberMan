@@ -18,10 +18,9 @@
  */
 package de.n6dt.bomberman.tiles;
 
-import java.awt.Point;
-
 import de.n6dt.bomberman.Board;
 import de.n6dt.bomberman.BomberMan;
+import de.n6dt.bomberman.Position;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -29,7 +28,7 @@ import de.n6dt.bomberman.BomberMan;
  */
 public class WallTile extends Tile implements ITile {
 
-	public WallTile(Point pos) {
+	public WallTile(Position pos) {
 		super(pos);
 	}
 
@@ -40,4 +39,7 @@ public class WallTile extends Tile implements ITile {
 		p.rect(_position.x * Board.TILE_SIZE + 3, _position.y * Board.TILE_SIZE + 3, Board.TILE_SIZE - 6, Board.TILE_SIZE - 6);
 	}
 
+	public boolean usable() {
+		return false;
+	}
 }

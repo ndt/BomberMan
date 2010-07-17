@@ -19,6 +19,8 @@
 package de.n6dt.bomberman;
 
 import java.util.ArrayList;
+
+import de.n6dt.bomberman.objects.Player;
 import processing.core.PApplet;
 
 /**
@@ -38,14 +40,14 @@ public class BomberMan extends PApplet {
 
 	ArrayList<Player> players;
 
-	Board board;
+	public static Board board;
 
 	public BomberMan() {
 		super();
 		board = new Board();
 		players = new ArrayList<Player>();
-		players.add(new Player(board, new Position(0, 0), "Spieler 1", 0xFF0050FF));
-		players.add(new Player(board, new Position(8, 8), "Spieler 2", 0xFF00FF00));
+		players.add(new Player(new Position(0, 0), "Spieler 1", 0xFF0050FF));
+		players.add(new Player(new Position(8, 8), "Spieler 2", 0xFF00FF00));
 		p = this;
 	}
 
@@ -79,7 +81,7 @@ public class BomberMan extends PApplet {
 			break;
 
 		case '0':
-			players.get(0).setBomb();
+			players.get(0).dropBomb();
 			break;
 
 		case 'a':
@@ -99,7 +101,7 @@ public class BomberMan extends PApplet {
 			break;
 
 		case ' ':
-			players.get(1).setBomb();
+			players.get(1).dropBomb();
 			break;
 
 		default:
@@ -113,9 +115,6 @@ public class BomberMan extends PApplet {
 			return;
 		}
 
-		players.get(0)._board.checkBombAndPlayer(players.get(0));
-		players.get(1)._board.checkBombAndPlayer(players.get(1));
-		
 		board.checkPlayers(players);
 
 		background(255);
