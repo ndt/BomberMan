@@ -21,7 +21,6 @@ package de.n6dt.bomberman;
 import de.n6dt.bomberman.tiles.NullTile;
 import de.n6dt.bomberman.tiles.Tile;
 import de.n6dt.bomberman.tiles.WallTile;
-import processing.core.PApplet;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -29,13 +28,7 @@ import processing.core.PApplet;
  */
 public class TileFactory {
 
-	PApplet p;
-
-	public TileFactory(PApplet parent) {
-		p = parent;
-	}
-
-	public Tile createTile(TileType type) {
+	public static Tile createTile(TileType type) {
 		Tile t;
 
 		switch (type) {

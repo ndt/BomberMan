@@ -29,13 +29,15 @@ public class Player {
 
 	Point _position;
 	String _name;
+	int  _color;
 	Board _board;
 	Bomb _bomb;
 
-	Player(Board board, Point initialPosition, String name) {
+	Player(Board board, Point initialPosition, String name, int color) {
 		_board = board;
 		_position = initialPosition;
 		_name = name;
+		_color = color;
 
 		_bomb = new Bomb(_board);
 		_board.tiles[_position.x][_position.y].setType(_name);
@@ -47,6 +49,13 @@ public class Player {
 			_board.tiles[_position.x][_position.y + 1].setType("free");
 		if (_position.y - 1 >= 0)
 			_board.tiles[_position.x][_position.y - 1].setType("free");
+	}
+	
+	public void draw(int x, int y) {
+		BomberMan p = BomberMan.getP();
+		p.fill(_color);
+		p.ellipse(x + BomberMan.TILE_SIZE / 2, y + BomberMan.TILE_SIZE / 2,
+				BomberMan.TILE_SIZE * 3 / 4, BomberMan.TILE_SIZE * 3 / 4);
 	}
 
 	void moveLeft() {
@@ -117,7 +126,7 @@ public class Player {
 
 	void killed() {
 		PApplet.println(_name + " killed!");
-		// stop = true;
+		BomberMan.stop = true;
 	}
 
 }

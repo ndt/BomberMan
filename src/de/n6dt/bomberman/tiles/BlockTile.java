@@ -24,17 +24,31 @@ import de.n6dt.bomberman.BomberMan;
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
-public class WallTile extends Tile implements ITile {
+public class BlockTile extends Tile implements ITile {
 
-	public WallTile() {
-		super("Wall");
-		// TODO Auto-generated constructor stub
+	public BlockTile() {
+		super("blocked");
 	}
 
-	public void draw(int x, int y) {
+	public void display(int x, int y) {
 		BomberMan p = BomberMan.getP();
-		p.fill(129);
-		p.rect(x + 3, y + 3, BomberMan.TILE_SIZE - 6, BomberMan.TILE_SIZE - 6);
+
+		p.fill(0);
+		p.rect(x, y, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
+	}
+
+	public String getType() {
+		return "blocked";
+	}
+
+	public boolean usable() {
+		return false;
+	}
+
+	@Override
+	public void draw(int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

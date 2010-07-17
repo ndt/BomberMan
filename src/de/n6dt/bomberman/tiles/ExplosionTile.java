@@ -18,36 +18,24 @@
  */
 package de.n6dt.bomberman.tiles;
 
-import de.n6dt.bomberman.BomberMan;
-
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
- * 
+ *
  */
-public class BlockedTile extends Tile implements ITile {
+public class ExplosionTile extends Tile implements ITile {
 
-	public BlockedTile() {
-		super("blocked");
+	public ExplosionTile() {
+		super("Explosion");
+		// TODO Auto-generated constructor stub
 	}
 
-	public void display(int x, int y) {
-		BomberMan p = BomberMan.getP();
-
-		p.fill(0);
-		p.rect(x, y, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
-	}
-
-	public String getType() {
-		return "blocked";
-	}
-
-	public boolean usable() {
-		return false;
-	}
-
+	/**
+	 * @see de.n6dt.bomberman.tiles.ITile#draw(int, int)
+	 */
 	@Override
-	public void draw() {
+	public void draw(int x, int y) {
 		// TODO Auto-generated method stub
 
 	}
+
 }

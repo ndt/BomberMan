@@ -23,5 +23,5 @@ package de.n6dt.bomberman.tiles;
  * 
  */
 public interface ITile {
-	public void draw();
+	public void draw(int x, int y);
 }

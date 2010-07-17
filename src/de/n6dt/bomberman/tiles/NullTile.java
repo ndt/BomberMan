@@ -28,8 +28,10 @@ public class NullTile extends Tile implements ITile {
 		super("Null");
 	}
 
-	public void draw() {
-
+	@Override
+	public void draw(int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

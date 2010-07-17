@@ -18,7 +18,7 @@
  */
 package de.n6dt.bomberman;
 
-import de.n6dt.bomberman.tiles.BlockedTile;
+import de.n6dt.bomberman.tiles.BlockTile;
 import de.n6dt.bomberman.tiles.Tile;
 
 /**
@@ -55,7 +55,7 @@ public class Board {
 		for (int i = 0; i < _tilesX; i++) {
 			for (int j = 0; j < _tilesY; j++) {
 				if ((i + 1) % 2 == 0 && (j + 1) % 2 == 0) {
-					tiles[i][j] = new BlockedTile();
+					tiles[i][j] = new BlockTile();
 				} else if ((i + 1) % 2 == 0 || (j + 1) % 2 == 0) {
 					tiles[i][j] = new Tile("wall");
 				} else {

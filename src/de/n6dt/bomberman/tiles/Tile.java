@@ -44,24 +44,6 @@ public class Tile {
 		p.fill(255);
 		p.rect(x, y, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
 
-		if (_type == "wall") {
-			p.fill(129);
-			p.rect(x + 3, y + 3, BomberMan.TILE_SIZE - 6,
-					BomberMan.TILE_SIZE - 6);
-		}
-
-		if (_type == "Spieler 1") {
-			p.fill(0x0050FF);
-			p.ellipse(x + BomberMan.TILE_SIZE / 2, y + BomberMan.TILE_SIZE / 2,
-					BomberMan.TILE_SIZE * 3 / 4, BomberMan.TILE_SIZE * 3 / 4);
-		}
-
-		if (_type == "Spieler 2") {
-			p.fill(0x00FF00);
-			p.ellipse(x + BomberMan.TILE_SIZE / 2, y + BomberMan.TILE_SIZE / 2,
-					BomberMan.TILE_SIZE * 3 / 4, BomberMan.TILE_SIZE * 3 / 4);
-		}
-
 		if (_type == "explode") {
 			if (!_exploding) {
 				_exploding = true;

@@ -27,9 +27,6 @@ import java.awt.Point;
  */
 public class BomberMan extends PApplet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public final static int WINDOW_WIDTH = 300;
@@ -38,7 +35,7 @@ public class BomberMan extends PApplet {
 	public final static int FRAME_RATE = 60;
 	public final static int EXPLODE_R = 3;
 
-	boolean stop = false;
+	public static boolean stop = false;
 
 	public static BomberMan p;
 	
@@ -49,8 +46,8 @@ public class BomberMan extends PApplet {
 	public BomberMan() {
 		super();
 		board = new Board(WINDOW_WIDTH, WINDOW_HEIGHT);
-		dau1 = new Player(board, new Point(0, 0), "Spieler 1");
-		dau2 = new Player(board, new Point(8, 8), "Spieler 2");
+		dau1 = new Player(board, new Point(0, 0), "Spieler 1", 0x0050FF);
+		dau2 = new Player(board, new Point(8, 8), "Spieler 2", 0x00FF00);
 		p = this;
 	}
 	

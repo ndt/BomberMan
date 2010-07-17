@@ -23,5 +23,7 @@ package de.n6dt.bomberman;
  * 
  */
 public enum TileType {
-	WALL
+	WALL,
+	BLOCKED,
+	PLAYER
 }
