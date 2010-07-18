@@ -16,19 +16,20 @@
  * If not, see http://www.gnu.org/licenses/lgpl.html
  *
  */
-package de.n6dt.bomberman.tiles;
+package de.n6dt.bomberman.items;
 
 import processing.core.PApplet;
 import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
+import de.n6dt.bomberman.tiles.Tile;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
-public class ExplosionTile extends Tile {
+public class Explosion extends Tile {
 	
-	public ExplosionTile(Position pos) {
+	public Explosion(Position pos) {
 		super(pos);
 	}
 

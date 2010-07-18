@@ -21,10 +21,10 @@ package de.n6dt.bomberman;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.n6dt.bomberman.items.Explosion;
 import de.n6dt.bomberman.items.Item;
 import de.n6dt.bomberman.items.Block;
 import de.n6dt.bomberman.tiles.WallTile;
-import de.n6dt.bomberman.tiles.ExplosionTile;
 import de.n6dt.bomberman.tiles.FreeTile;
 import de.n6dt.bomberman.tiles.Tile;
 import processing.core.PApplet;
@@ -169,7 +169,7 @@ public class BomberMan extends PApplet {
 	public static void checkPlayers(ArrayList<Player> players) {
 		for (Player player : players) {
 			for (Tile tile : tiles.values()) {
-				if ((tile instanceof ExplosionTile)
+				if ((tile instanceof Explosion)
 						&& tile.getPosition() == player.getPosition()) {
 					stop = true;
 				}
