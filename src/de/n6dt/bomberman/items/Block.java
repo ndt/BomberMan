@@ -16,29 +16,26 @@
  * If not, see http://www.gnu.org/licenses/lgpl.html
  *
  */
-package de.n6dt.bomberman.tiles;
+package de.n6dt.bomberman.items;
 
 import processing.core.PApplet;
 import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
+import de.n6dt.bomberman.tiles.Tile;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
-public class BlockTile extends Tile implements ITile {
+public class Block extends Tile {
 
-	public BlockTile(Position pos) {
+	public Block(Position pos) {
 		super(pos);
 	}
 
 	public void draw(PApplet p) {
-		p.fill(0);
-		p.rect(_position.x * BomberMan.TILE_SIZE, _position.y * BomberMan.TILE_SIZE, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
-	}
-
-	public String getType() {
-		return "blocked";
+		p.fill(129);
+		p.rect(_position.x * BomberMan.TILE_SIZE + 3, _position.y * BomberMan.TILE_SIZE + 3, BomberMan.TILE_SIZE - 6, BomberMan.TILE_SIZE - 6);
 	}
 
 	public boolean usable() {

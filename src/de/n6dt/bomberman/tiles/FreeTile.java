@@ -26,7 +26,7 @@ import de.n6dt.bomberman.Position;
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
-public class FreeTile extends Tile implements ITile {
+public class FreeTile extends Tile {
 
 	public FreeTile(Position pos) {
 		super(pos);

@@ -26,7 +26,7 @@ import de.n6dt.bomberman.Position;
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
-public class ExplosionTile extends Tile implements ITile {
+public class ExplosionTile extends Tile {
 	
 	public ExplosionTile(Position pos) {
 		super(pos);

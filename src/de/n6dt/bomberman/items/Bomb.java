@@ -22,7 +22,6 @@ import processing.core.PApplet;
 import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
 import de.n6dt.bomberman.tiles.ExplosionTile;
-import de.n6dt.bomberman.tiles.WallTile;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -44,28 +43,28 @@ public class Bomb extends Item {
 		for (int i = 1; i <= _explodeRadius; i++) {
 			Position p = _position.right(i);
 			if (p.x < BomberMan.TILES_WIDTH) {
-				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				if (BomberMan.tiles.get(p) instanceof Block) break;
 				BomberMan.items.put(p,new ExplosionTile(p));
 			}
 		}
 		for (int i = 1; i <= _explodeRadius; i++) {
 			Position p = _position.left(i);
 			if (p.x >= 0) {
-				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				if (BomberMan.tiles.get(p) instanceof Block) break;
 				BomberMan.items.put(p,new ExplosionTile(p));
 			}
 		}
 		for (int i = 1; i <= _explodeRadius; i++) {
 			Position p = _position.down(i);
 			if (p.y < BomberMan.TILES_HEIGHT) {
-				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				if (BomberMan.tiles.get(p) instanceof Block) break;
 				BomberMan.items.put(p,new ExplosionTile(p));
 			}
 		}
 		for (int i = 1; i <= _explodeRadius; i++) {
 			Position p = _position.up(i);
 			if (p.y >= 0) {
-				if (BomberMan.tiles.get(p) instanceof WallTile) break;
+				if (BomberMan.tiles.get(p) instanceof Block) break;
 				BomberMan.items.put(p,new ExplosionTile(p));
 			}
 		}

@@ -33,8 +33,8 @@ public class WallTile extends Tile {
 	}
 
 	public void draw(PApplet p) {
-		p.fill(129);
-		p.rect(_position.x * BomberMan.TILE_SIZE + 3, _position.y * BomberMan.TILE_SIZE + 3, BomberMan.TILE_SIZE - 6, BomberMan.TILE_SIZE - 6);
+		p.fill(0);
+		p.rect(_position.x * BomberMan.TILE_SIZE, _position.y * BomberMan.TILE_SIZE, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
 	}
 
 	public boolean usable() {

@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.n6dt.bomberman.items.Item;
-import de.n6dt.bomberman.tiles.BlockTile;
+import de.n6dt.bomberman.items.Block;
+import de.n6dt.bomberman.tiles.WallTile;
 import de.n6dt.bomberman.tiles.ExplosionTile;
 import de.n6dt.bomberman.tiles.FreeTile;
-import de.n6dt.bomberman.tiles.ITile;
-import de.n6dt.bomberman.tiles.WallTile;
+import de.n6dt.bomberman.tiles.Tile;
 import processing.core.PApplet;
 
 /**
@@ -62,11 +62,11 @@ public class BomberMan extends PApplet {
 	};
 
 	public static HashMap<Position,Item> items;
-	public static HashMap<Position,ITile> tiles;
+	public static HashMap<Position,Tile> tiles;
 
 	public BomberMan() {
 		super();
-		tiles = new HashMap<Position, ITile>();
+		tiles = new HashMap<Position, Tile>();
 		items = new HashMap<Position, Item>();
 		
 		BomberMan.createLevel1();
@@ -139,7 +139,7 @@ public class BomberMan extends PApplet {
 		BomberMan.checkPlayers(players);
 
 		background(255);
-		for (ITile tile: tiles.values()) {
+		for (Tile tile: tiles.values()) {
 			tile.draw(this);
 		}
 		for (Item object: items.values()) {
@@ -156,9 +156,9 @@ public class BomberMan extends PApplet {
 				Position pos = new Position(i, j);
 	
 				if ((i + 1) % 4 == 0 && (j + 1) % 4 == 0) {
-					tiles.put(pos, new BlockTile(pos));
+					tiles.put(pos, new WallTile(pos));
 				} else if ((i + 1) % 4 == 0 || (j + 1) % 4 == 0) {
-					items.put(pos, new WallTile(pos));
+					items.put(pos, new Block(pos));
 				} else {
 					tiles.put(pos, new FreeTile(pos));
 				}
@@ -168,7 +168,7 @@ public class BomberMan extends PApplet {
 
 	public static void checkPlayers(ArrayList<Player> players) {
 		for (Player player : players) {
-			for (ITile tile : tiles.values()) {
+			for (Tile tile : tiles.values()) {
 				if ((tile instanceof ExplosionTile)
 						&& tile.getPosition() == player.getPosition()) {
 					stop = true;

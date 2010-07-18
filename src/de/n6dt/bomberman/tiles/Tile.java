@@ -25,7 +25,7 @@ import de.n6dt.bomberman.items.Item;
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
-public abstract class Tile extends Item implements ITile {
+public abstract class Tile extends Item {
 	
 	public Tile(Position pos) {
 		super(pos);
