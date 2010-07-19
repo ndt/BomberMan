@@ -57,8 +57,8 @@ public class Player {
 	 * 
 	 */
 	public void moveLeft() {
-		if (BomberMan.canMoveLeft(_position)) {
-			_position.x--;
+		if (BomberMan.tiles.get(_position.left()).isWalkable()) {
+			_position = _position.left();
 		}
 	}
 
@@ -66,8 +66,8 @@ public class Player {
 	 * 
 	 */
 	public void moveRight() {
-		if (BomberMan.canMoveRight(_position)) {
-			_position.x++;
+		if (BomberMan.tiles.get(_position.right()).isWalkable()) {
+			_position = _position.right();
 		}
 	}
 
@@ -75,8 +75,8 @@ public class Player {
 	 * 
 	 */
 	public void moveUp() {
-		if (BomberMan.canMoveUp(_position)) {
-			_position.y--;
+		if (BomberMan.tiles.get(_position.up()).isWalkable()) {
+			_position = _position.up();
 		}
 	}
 
@@ -84,8 +84,8 @@ public class Player {
 	 * 
 	 */
 	public void moveDown() {
-		if (BomberMan.canMoveDown(_position)) {
-			_position.y++;
+		if (BomberMan.tiles.get(_position.down()).isWalkable()) {
+			_position = _position.down();
 		}
 	}
 

@@ -18,7 +18,7 @@ public class Position extends Point {
 	}
 
 	public Position down(int i) {
-		return new Position(x,y+i);
+		return new Position(x, Math.min(y+i, BomberMan.TILES_HEIGHT-1));
 	}
 
 	public Position up() {
@@ -26,7 +26,7 @@ public class Position extends Point {
 	}
 
 	public Position up(int i) {
-		return new Position(x,y-i);
+		return new Position(x, Math.max(y-i, 0));
 	}
 
 	public Position right() {
@@ -34,7 +34,7 @@ public class Position extends Point {
 	}
 
 	public Position right(int i) {
-		return new Position(x+i,y);
+		return new Position(Math.min(x+i, BomberMan.TILES_WIDTH-1), y);
 	}
 
 	public Position left() {
@@ -42,7 +42,7 @@ public class Position extends Point {
 	}
 
 	public Position left(int i) {
-		return new Position(x-i,y);
+		return new Position(Math.max(x-i, 0), y);
 	}
 
 }

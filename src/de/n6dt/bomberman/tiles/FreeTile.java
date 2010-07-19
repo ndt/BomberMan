@@ -25,11 +25,16 @@ import de.n6dt.bomberman.BomberMan;
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  * 
  */
-public class FreeTile extends Tile {
+public class FreeTile implements ITile {
 
 	public void draw(PApplet p) {
 		p.fill(255);
 		p.rect(0, 0, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
+	}
+
+	@Override
+	public boolean isWalkable() {
+		return true;
 	}
 
 }

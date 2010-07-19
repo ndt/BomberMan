@@ -24,9 +24,9 @@ import java.util.HashMap;
 import de.n6dt.bomberman.items.Explosion;
 import de.n6dt.bomberman.items.Item;
 import de.n6dt.bomberman.items.Block;
+import de.n6dt.bomberman.tiles.ITile;
 import de.n6dt.bomberman.tiles.WallTile;
 import de.n6dt.bomberman.tiles.FreeTile;
-import de.n6dt.bomberman.tiles.Tile;
 import processing.core.PApplet;
 
 /**
@@ -40,12 +40,10 @@ public class BomberMan extends PApplet {
 	public static final int FRAME_RATE = 60;
 
 	public static final int TILE_SIZE = 30;
-	public static final int TILES_HEIGHT = 11;
-	public static final int TILES_WIDTH = 21;
 
 	public static final String[] level1 = {
 		"FFFFFFFFFFFFFFFFFFFFF",
-		"NNNWWWWWWWWWWWWWWWNNN",
+		"FFFWWWWWWWWWWWWWWWFFF",
 		"FFFFFFFFFFFFFFFFFFFFF",
 		"FFFFFFFFFFFFWWWWWFFFF",
 		"FFFFFFFFFFFFFFFFFFFFF",
@@ -54,16 +52,19 @@ public class BomberMan extends PApplet {
 		"FFFFWFFFFFWFFFFFWWFFF",
 		"FFFFWWWWWWWFFFFFFWFFF",
 		"FFFFFFFFFFFFFFFFFFFFF",
-		"FFFFFFFFFFFFFFFFFFFFF" };
+		"FFFFFFFFFFFFFFFFFFFFF"};
+
+	public static final int TILES_HEIGHT = level1.length;
+	public static final int TILES_WIDTH = level1[0].length();
 
 	public static boolean stop = false;
-	public static HashMap<Position, Tile> tiles;
+	public static HashMap<Position, ITile> tiles;
 	public static ArrayList<Item> items;
 	public static ArrayList<Player> players;
 
 	public BomberMan() {
 		super();
-		tiles = new HashMap<Position, Tile>();
+		tiles = new HashMap<Position, ITile>();
 		items = new ArrayList<Item>();
 
 		BomberMan.createLevel1();
@@ -74,8 +75,7 @@ public class BomberMan extends PApplet {
 	}
 
 	public void setup() {
-		size(BomberMan.TILES_WIDTH * BomberMan.TILE_SIZE + 1,
-				BomberMan.TILES_HEIGHT * BomberMan.TILE_SIZE + 1);
+		size(BomberMan.TILES_WIDTH * BomberMan.TILE_SIZE + 1, BomberMan.TILES_HEIGHT * BomberMan.TILE_SIZE + 1);
 		smooth();
 		frameRate(FRAME_RATE);
 	}
@@ -143,13 +143,13 @@ public class BomberMan extends PApplet {
 	}
 
 	private void drawBackground() {
-		Tile tile;
+		ITile tile;
 
 		pushMatrix();
 		translate(-TILE_SIZE, 0);
-		for (int i = 0; i < level1.length; i++) {
+		for (int i = 0; i < level1.length; i++) { // rows
 			pushMatrix();
-			for (int j = 0; j < level1[0].length(); j++) {
+			for (int j = 0; j < level1[0].length(); j++) { // columns
 				translate(TILE_SIZE, 0);
 				switch (level1[i].charAt(j)) {
 				case 'F':
@@ -165,6 +165,7 @@ public class BomberMan extends PApplet {
 					break;
 				}
 				tile.draw(this);
+				tiles.put(new Position(j,i), tile);
 			}
 			popMatrix();
 			translate(0, TILE_SIZE);
@@ -219,28 +220,5 @@ public class BomberMan extends PApplet {
 				}
 			}
 		}
-	}
-
-	public static boolean canMoveDown(Position _position) {
-		return (_position.y + 1 < BomberMan.TILES_HEIGHT)
-				&& (tiles.get(_position.down(1)).usable());
-	}
-
-	public static boolean canMoveUp(Position _position) {
-		return (_position.y - 1 >= 0) && (tiles.get(_position.up(1)).usable());
-	}
-
-	public static boolean canMoveRight(Position _position) {
-		return (_position.x + 1 < BomberMan.TILES_WIDTH)
-				&& (tiles.get(_position.right(1)).usable());
-	}
-
-	public static boolean canMoveLeft(Position _position) {
-		return (_position.x - 1 >= 0)
-				&& (tiles.get(_position.left(1)).usable());
-	}
-
-	public static void addItem(Item item) {
-		items.add(item);
 	}
 }
