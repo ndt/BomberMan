@@ -20,7 +20,6 @@ package de.n6dt.bomberman.tiles;
 
 import processing.core.PApplet;
 import de.n6dt.bomberman.BomberMan;
-import de.n6dt.bomberman.Position;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
@@ -28,13 +27,9 @@ import de.n6dt.bomberman.Position;
  */
 public class FreeTile extends Tile {
 
-	public FreeTile(Position pos) {
-		super(pos);
-	}
-
 	public void draw(PApplet p) {
 		p.fill(255);
-		p.rect(_position.x * BomberMan.TILE_SIZE, _position.y * BomberMan.TILE_SIZE, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
+		p.rect(0, 0, BomberMan.TILE_SIZE, BomberMan.TILE_SIZE);
 	}
 
 }

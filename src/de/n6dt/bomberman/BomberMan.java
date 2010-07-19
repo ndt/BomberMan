@@ -37,47 +37,45 @@ public class BomberMan extends PApplet {
 
 	private static final long serialVersionUID = 1L;
 
-	public final static int FRAME_RATE = 60;
+	public static final int FRAME_RATE = 60;
 
-	public static boolean stop = false;
-
-	ArrayList<Player> players;
-
-	public final static int TILE_SIZE = 30;
-	public final static int TILES_HEIGHT = 11;
-	public final static int TILES_WIDTH = 21;
+	public static final int TILE_SIZE = 30;
+	public static final int TILES_HEIGHT = 11;
+	public static final int TILES_WIDTH = 21;
 
 	public static final String[] level1 = {
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNBBBBBBBBBBBBBBBNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN",
-		"NNNNNNNNNNNNNNNNNNNNN"
-	};
+		"FFFFFFFFFFFFFFFFFFFFF",
+		"NNNWWWWWWWWWWWWWWWNNN",
+		"FFFFFFFFFFFFFFFFFFFFF",
+		"FFFFFFFFFFFFWWWWWFFFF",
+		"FFFFFFFFFFFFFFFFFFFFF",
+		"FFWWWWWWWWWWWWWWWFFFF",
+		"FFFFWFFFFFFFFFFFFFFFF",
+		"FFFFWFFFFFWFFFFFWWFFF",
+		"FFFFWWWWWWWFFFFFFWFFF",
+		"FFFFFFFFFFFFFFFFFFFFF",
+		"FFFFFFFFFFFFFFFFFFFFF" };
 
-	public static HashMap<Position,Item> items;
-	public static HashMap<Position,Tile> tiles;
+	public static boolean stop = false;
+	public static HashMap<Position, Tile> tiles;
+	public static ArrayList<Item> items;
+	public static ArrayList<Player> players;
 
 	public BomberMan() {
 		super();
 		tiles = new HashMap<Position, Tile>();
-		items = new HashMap<Position, Item>();
-		
+		items = new ArrayList<Item>();
+
 		BomberMan.createLevel1();
-		
+
 		players = new ArrayList<Player>();
 		players.add(new Player(new Position(0, 0), "Spieler 1", 0xFF0050FF));
-		players.add(new Player(new Position(8, 8), "Spieler 2", 0xFF00FF00));
+		players.add(new Player(new Position(8, 9), "Spieler 2", 0xFF00FF00));
 	}
 
 	public void setup() {
-		size(BomberMan.TILES_WIDTH * BomberMan.TILE_SIZE + 1, BomberMan.TILES_HEIGHT * BomberMan.TILE_SIZE + 1);
+		size(BomberMan.TILES_WIDTH * BomberMan.TILE_SIZE + 1,
+				BomberMan.TILES_HEIGHT * BomberMan.TILE_SIZE + 1);
 		smooth();
 		frameRate(FRAME_RATE);
 	}
@@ -139,14 +137,64 @@ public class BomberMan extends PApplet {
 		BomberMan.checkPlayers(players);
 
 		background(255);
-		for (Tile tile: tiles.values()) {
-			tile.draw(this);
+		drawBackground();
+		drawItems();
+		drawPlayers();
+	}
+
+	private void drawBackground() {
+		Tile tile;
+
+		pushMatrix();
+		translate(-TILE_SIZE, 0);
+		for (int i = 0; i < level1.length; i++) {
+			pushMatrix();
+			for (int j = 0; j < level1[0].length(); j++) {
+				translate(TILE_SIZE, 0);
+				switch (level1[i].charAt(j)) {
+				case 'F':
+					tile = new FreeTile();
+					break;
+
+				case 'W':
+					tile = new WallTile();
+					break;
+
+				default:
+					tile = new FreeTile();
+					break;
+				}
+				tile.draw(this);
+			}
+			popMatrix();
+			translate(0, TILE_SIZE);
 		}
-		for (Item object: items.values()) {
-			object.draw(this);
+		popMatrix();
+	}
+
+	private void drawItems() {
+		Position pos;
+
+		for (Item item : items) {
+			pos = item.getPosition();
+
+			pushMatrix();
+			translate(pos.x * TILE_SIZE, pos.y * TILE_SIZE);
+			item.draw(this);
+			popMatrix();
 		}
+	}
+
+	private void drawPlayers() {
+		Position pos;
+
 		for (Player player : players) {
+			pos = player.getPosition();
+
+			pushMatrix();
+			translate(pos.x * TILE_SIZE, pos.y * TILE_SIZE);
 			player.draw(this);
+			popMatrix();
 		}
 	}
 
@@ -154,13 +202,8 @@ public class BomberMan extends PApplet {
 		for (int i = 0; i < BomberMan.TILES_WIDTH; i++) {
 			for (int j = 0; j < BomberMan.TILES_HEIGHT; j++) {
 				Position pos = new Position(i, j);
-	
-				if ((i + 1) % 4 == 0 && (j + 1) % 4 == 0) {
-					tiles.put(pos, new WallTile(pos));
-				} else if ((i + 1) % 4 == 0 || (j + 1) % 4 == 0) {
-					items.put(pos, new Block(pos));
-				} else {
-					tiles.put(pos, new FreeTile(pos));
+				if ((i + 1) % 4 == 0 || (j + 1) % 4 == 0) {
+					items.add(new Block(pos));
 				}
 			}
 		}
@@ -168,10 +211,11 @@ public class BomberMan extends PApplet {
 
 	public static void checkPlayers(ArrayList<Player> players) {
 		for (Player player : players) {
-			for (Tile tile : tiles.values()) {
-				if ((tile instanceof Explosion)
-						&& tile.getPosition() == player.getPosition()) {
-					stop = true;
+			for (Item item : items) {
+				if (item.getPosition() == player.getPosition()) {
+					if (item instanceof Explosion) {
+						stop = true;
+					}
 				}
 			}
 		}
@@ -183,8 +227,7 @@ public class BomberMan extends PApplet {
 	}
 
 	public static boolean canMoveUp(Position _position) {
-		return (_position.y - 1 >= 0)
-				&& (tiles.get(_position.up(1)).usable());
+		return (_position.y - 1 >= 0) && (tiles.get(_position.up(1)).usable());
 	}
 
 	public static boolean canMoveRight(Position _position) {
@@ -196,8 +239,8 @@ public class BomberMan extends PApplet {
 		return (_position.x - 1 >= 0)
 				&& (tiles.get(_position.left(1)).usable());
 	}
-	
-	public static void addItem(Position pos, Item item) {
-		items.put(pos, item);
+
+	public static void addItem(Item item) {
+		items.add(item);
 	}
 }

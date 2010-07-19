@@ -18,20 +18,17 @@
  */
 package de.n6dt.bomberman.tiles;
 
-import de.n6dt.bomberman.Position;
-import de.n6dt.bomberman.items.Item;
+import processing.core.PApplet;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
-public abstract class Tile extends Item {
+abstract public class Tile {
 	
-	public Tile(Position pos) {
-		super(pos);
-	}
-
 	public boolean usable() {
 		return true;
 	}
+	
+	abstract public void draw(PApplet p);
 }

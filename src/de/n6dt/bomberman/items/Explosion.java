@@ -21,13 +21,12 @@ package de.n6dt.bomberman.items;
 import processing.core.PApplet;
 import de.n6dt.bomberman.BomberMan;
 import de.n6dt.bomberman.Position;
-import de.n6dt.bomberman.tiles.Tile;
 
 /**
  * @author nicolas nieswandt <nicolas.nieswandt@googlemail.com>
  *
  */
-public class Explosion extends Tile {
+public class Explosion extends Item {
 	
 	public Explosion(Position pos) {
 		super(pos);
@@ -39,7 +38,7 @@ public class Explosion extends Tile {
 	@Override
 	public void draw(PApplet p) {
 		p.fill(0xFFFF0000);
-		p.rect(_position.x * BomberMan.TILE_SIZE + 5, _position.y * BomberMan.TILE_SIZE + 5, BomberMan.TILE_SIZE - 10, BomberMan.TILE_SIZE - 10);
+		p.rect(5, 5, BomberMan.TILE_SIZE - 10, BomberMan.TILE_SIZE - 10);
 	}
 
 }

@@ -50,7 +50,7 @@ public class Player {
 	 */
 	public void draw(PApplet p) {
 		p.fill(_color);
-		p.ellipse((float) (_position.x + 0.5) * BomberMan.TILE_SIZE, (float) (_position.y + 0.5) * BomberMan.TILE_SIZE, DIAMETER, DIAMETER);
+		p.ellipse(BomberMan.TILE_SIZE/2, BomberMan.TILE_SIZE/2, DIAMETER, DIAMETER);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Player {
 	 * 
 	 */
 	public void dropBomb() {
-		BomberMan.items.put(_position, new Bomb(_position));
+		BomberMan.items.add(new Bomb(_position));
 	}
 
 	public Position getPosition() {

@@ -28,7 +28,7 @@ import de.n6dt.bomberman.Position;
  */
 public class Bomb extends Item {
 
-	final int DURATION = 3;
+	static final int DURATION = 3;
 
 	int _explodeRadius;
 
@@ -37,41 +37,12 @@ public class Bomb extends Item {
 	}
 
 	void explode() {
-		BomberMan.items.put(_position, new Explosion(_position));
-		
-		for (int i = 1; i <= _explodeRadius; i++) {
-			Position p = _position.right(i);
-			if (p.x < BomberMan.TILES_WIDTH) {
-				if (BomberMan.tiles.get(p) instanceof Block) break;
-				BomberMan.items.put(p,new Explosion(p));
-			}
-		}
-		for (int i = 1; i <= _explodeRadius; i++) {
-			Position p = _position.left(i);
-			if (p.x >= 0) {
-				if (BomberMan.tiles.get(p) instanceof Block) break;
-				BomberMan.items.put(p,new Explosion(p));
-			}
-		}
-		for (int i = 1; i <= _explodeRadius; i++) {
-			Position p = _position.down(i);
-			if (p.y < BomberMan.TILES_HEIGHT) {
-				if (BomberMan.tiles.get(p) instanceof Block) break;
-				BomberMan.items.put(p,new Explosion(p));
-			}
-		}
-		for (int i = 1; i <= _explodeRadius; i++) {
-			Position p = _position.up(i);
-			if (p.y >= 0) {
-				if (BomberMan.tiles.get(p) instanceof Block) break;
-				BomberMan.items.put(p,new Explosion(p));
-			}
-		}
+		BomberMan.items.add(new Explosion(_position));
 	}
 
 	public void draw(PApplet p) {
 		p.fill(0);
-		p.ellipse((float) (_position.x + 0.5) * BomberMan.TILE_SIZE, (float) (_position.y + 0.5) * BomberMan.TILE_SIZE, (float) BomberMan.TILE_SIZE / 2, (float) BomberMan.TILE_SIZE / 2);
+		p.ellipse(BomberMan.TILE_SIZE/2, BomberMan.TILE_SIZE/2, BomberMan.TILE_SIZE/2, BomberMan.TILE_SIZE/2);
 	}
 
 }
